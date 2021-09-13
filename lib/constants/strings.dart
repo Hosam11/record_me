@@ -1,0 +1,1 @@
+const appName = 'Record Me';
