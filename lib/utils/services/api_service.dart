@@ -3,10 +3,6 @@ import 'package:fimber/fimber.dart';
 import 'package:get/get.dart' hide Response, FormData;
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:record_me/utils/services/service_helper.dart';
-// import 'package:logione_app/data/models/response_model.dart';
-// import 'package:logione_app/utils/services/localization_service.dart';
-// import 'package:logione_app/utils/services/storage_service.dart';
-// import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class ApiService extends GetxService {
   static final ApiService _apiUtil = ApiService._();
