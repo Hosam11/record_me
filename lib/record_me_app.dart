@@ -14,9 +14,9 @@ class RecordMeApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: appName,
       theme: getAppTheme(context),
-      home: LoginScreen(),
+      // home: LoginScreen(),
       getPages: routes,
-      initialRoute: loginScreen,
+      initialRoute: initial,
     );
   }
 }
