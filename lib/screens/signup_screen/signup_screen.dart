@@ -8,17 +8,17 @@ import 'package:record_me/constants/colors.dart';
 import 'package:record_me/constants/dimensions.dart';
 import 'package:record_me/constants/strings.dart';
 import 'package:record_me/constants/styles.dart';
-import 'package:record_me/screens/login_screen/login_controller.dart';
+import 'package:record_me/screens/signup_screen/signup_controller.dart';
 import 'package:record_me/shared_widgets/custom_text_input.dart';
 import 'package:record_me/shared_widgets/shared_button.dart';
 import 'package:record_me/shared_widgets/social_button.dart';
 
 const bottomPadding = EdgeInsets.only(bottom: mediumDimens);
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
-  final LoginController _loginController = Get.put(LoginController());
+class SignupScreen extends StatelessWidget {
+  SignupScreen({Key? key}) : super(key: key);
   final _formKey = GlobalKey<FormState>();
+  final SignUpController _signUpController = Get.put(SignUpController());
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: GetX<LoginController>(
+          child: GetX<SignUpController>(
             builder: (_) => Form(
               key: _formKey,
               child: Padding(
@@ -64,41 +64,41 @@ class LoginScreen extends StatelessWidget {
                         labelText: password,
                         hintText: password,
                         keyboardType: TextInputType.visiblePassword,
-                        obscure: !_loginController.visiblePsd,
+                        obscure: !_signUpController.visiblePsd,
                         validator: onPasswordValidate,
                         onSaved: onPasswordSaved,
                         suffixIcon: IconButton(
                           icon: Icon(
                             // Based on passwordVisible state choose the icon
-                            _loginController.visiblePsd
+                            _signUpController.visiblePsd
                                 ? Icons.visibility
                                 : Icons.visibility_off,
                             color: kPrimaryColor,
                           ),
                           onPressed: () {
-                            _loginController.toggleVisiblePsd();
+                            _signUpController.toggleVisiblePsd();
                           },
                         ),
                       ),
                     ),
-                    // ------------------ login button ------------------
+                    // ------------------ Signup button ------------------
                     ShardButtonWidget(
-                      mText: signIn,
+                      mText: signup,
                       mWidth: size.width,
-                      mOnPressed: onLoginPressed,
+                      mOnPressed: onSignUpPressed,
                     ),
-                    // ------------------new user msg ------------------
+                    // ------------------old user msg ------------------
                     Padding(
                       padding: const EdgeInsets.only(top: 16.0),
                       child: Text.rich(
                         TextSpan(
-                          text: newUser,
+                          text: alreadyUser,
                           style: const TextStyle(),
                           children: <TextSpan>[
                             TextSpan(
-                              text: singUpHere,
+                              text: loginHere,
                               recognizer: TapGestureRecognizer()
-                                ..onTap = signupPressed,
+                                ..onTap = onLoginHerePressed,
                               style: const TextStyle(
                                 color: kSecondaryColor,
                                 decoration: TextDecoration.underline,
@@ -112,7 +112,7 @@ class LoginScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(16).copyWith(top: 20),
                       child: const Text(
-                        orLoginWith,
+                        orSignUpWith,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -158,9 +158,9 @@ class LoginScreen extends StatelessWidget {
 
   void onPasswordSaved(String? p1) {}
 
-  void signupPressed() {}
+  void onLoginHerePressed() {}
 
-  void onLoginPressed() {}
+  void onSignUpPressed() {}
 
   void onFBPressed() {}
 
