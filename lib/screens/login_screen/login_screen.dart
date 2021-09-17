@@ -1,6 +1,7 @@
 import 'package:fimber/fimber.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:record_me/constants/assets.dart';
@@ -17,7 +18,6 @@ const bottomPadding = EdgeInsets.only(bottom: mediumDimens);
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
-  final LoginController _loginController = Get.put(LoginController());
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -28,7 +28,8 @@ class LoginScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: GetX<LoginController>(
-            builder: (_) => Form(
+            init: LoginController(),
+            builder: (_loginController) => Form(
               key: _formKey,
               child: Padding(
                 padding: kScreenPadding,
@@ -85,7 +86,7 @@ class LoginScreen extends StatelessWidget {
                     ShardButtonWidget(
                       mText: signIn,
                       mWidth: size.width,
-                      mOnPressed: onLoginPressed,
+                      mOnPressed: onEmailLoginPressed,
                     ),
                     // ------------------new user msg ------------------
                     Padding(
@@ -126,7 +127,10 @@ class LoginScreen extends StatelessWidget {
                         SocialButton(
                           socialIcon: FontAwesomeIcons.facebook,
                           mColor: const Color(0xFF0E8BF1),
-                          mOnPressed: onFBPressed,
+                          mOnPressed: () {
+                            signInWithFacebook(_loginController);
+                            Fimber.i('');
+                          },
                         ),
                         SocialButton(
                           socialIcon: FontAwesomeIcons.twitter,
@@ -136,7 +140,7 @@ class LoginScreen extends StatelessWidget {
                         SocialButton(
                           socialIcon: FontAwesomeIcons.google,
                           mColor: const Color(0xFFF10E3B),
-                          mOnPressed: onGooglePressed,
+                          mOnPressed: signInWithGoogle,
                         ),
                       ],
                     ),
@@ -160,11 +164,16 @@ class LoginScreen extends StatelessWidget {
 
   void signupPressed() {}
 
-  void onLoginPressed() {}
+  Future<void> onEmailLoginPressed() async {
+    // final userCred = await signInWithFacebook();
+  }
 
-  void onFBPressed() {}
+  Future<void> signInWithFacebook(LoginController loginController) async {
+    // final x = Get.find<LoginController>();
+    loginController.loginWithFacebook();
+  }
+
+  void signInWithGoogle() {}
 
   void onTwitterPressed() {}
-
-  void onGooglePressed() {}
 }
