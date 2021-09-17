@@ -21,7 +21,7 @@ const bottomPadding = EdgeInsets.only(bottom: mediumDimens);
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
   final _formKey = GlobalKey<FormState>();
-
+  final LoginController _loginController = Get.put(LoginController());
   @override
   Widget build(BuildContext context) {
     final size = Get.size;
@@ -167,16 +167,28 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  void onEmailSaved(String? p1) {}
+  void onEmailSaved(String? email) {
+    _loginController.email = email;
+  }
 
-  void onPasswordSaved(String? p1) {}
+  void onPasswordSaved(String? password) {
+    _loginController.password = password;
+  }
 
   void signupPressed() {
     Get.toNamed(signupScreen);
   }
 
   Future<void> onEmailLoginPressed() async {
+    Fimber.i('login');
     // final userCred = await signInWithFacebook();
+    final valid = _formKey.currentState?.validate();
+    if (valid != null) {
+      if (valid) {
+        _formKey.currentState?.save();
+        _loginController.emailCallLogin();
+      }
+    }
   }
 
   Future<void> signInWithFacebook(LoginController loginController) async {

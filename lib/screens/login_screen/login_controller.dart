@@ -2,20 +2,66 @@ import 'package:fimber/fimber.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
+import 'package:record_me/constants/strings.dart';
 import 'package:record_me/routes.dart';
+import 'package:record_me/screens/base_controller.dart';
 import 'package:record_me/utils/dialogs.dart';
-import 'package:record_me/utils/services/storage_service.dart';
 
 class LoginController extends GetxController {
   final RxBool _visiblePsd = false.obs;
-
-  bool get visiblePsd => _visiblePsd.value;
+  String? _email;
+  String? _password;
 
   void toggleVisiblePsd() {
     _visiblePsd.value = !_visiblePsd.value;
     update();
   }
 
+  // ------------------------- setters -------------------------
+  String? get email => _email;
+  String? get password => _password;
+  bool get visiblePsd => _visiblePsd.value;
+
+  // ------------------------- setters -------------------------
+  set email(String? value) {
+    _email = value;
+    update();
+  }
+
+  set password(String? value) {
+    _password = value;
+    update();
+  }
+
+  emailCallLogin() {
+    makeInternetCall(_loginWithEmail);
+  }
+
+  _loginWithEmail() async {
+    Fimber.i('email= $email, psd= $password  ');
+
+    try {
+      startLoading();
+      final userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email!,
+        password: password!,
+      );
+      Fimber.i('userCredential= $userCredential');
+      saveUserData(userCredential);
+      stopLoading();
+      Get.toNamed(homeScreen);
+    } on FirebaseAuthException catch (e) {
+      stopLoading();
+      Fimber.i('firebaseCode= ${e.code}');
+      await showInfoDialog(error, e.message);
+    } catch (e) {
+      Fimber.i('error= $e');
+      stopLoading();
+    }
+  }
+
+  // methods
   loginWithFacebook() async {
     Fimber.i('-');
     // Trigger the sign-in flow
@@ -40,13 +86,5 @@ class LoginController extends GetxController {
     } catch (e) {
       Fimber.i('user not logged e= $e ');
     }
-  }
-
-  saveUserData(UserCredential user) async {
-    final storageServ = Get.find<StorageService>();
-    await storageServ.setString(emailKey, user.user?.email ?? notFoundPref);
-    await storageServ.setString(idKey, user.user?.uid ?? notFoundPref);
-    await storageServ.setString(
-        tokenKey, user.credential?.token.toString() ?? notFoundPref);
   }
 }

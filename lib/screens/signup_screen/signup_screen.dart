@@ -173,7 +173,7 @@ class SignupScreen extends StatelessWidget {
     if (valid != null) {
       if (valid) {
         _formKey.currentState?.save();
-        _signUpController.signupCall();
+        _signUpController.signupEmailCall();
       }
     }
   }
