@@ -16,6 +16,7 @@ class HomeScreen extends StatelessWidget {
               Text(homeController.userData?.email ?? ''),
               Text(homeController.userData?.name ?? ''),
               Text(homeController.userData?.id ?? ''),
+              // Text(homeController.userData?. ?? ''),
             ],
           ),
         ),

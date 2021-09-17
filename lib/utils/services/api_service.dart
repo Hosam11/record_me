@@ -59,4 +59,5 @@ class ApiService extends GetxService {
       return null;
     }
   }
+
 }

@@ -8,10 +8,13 @@ import 'package:record_me/constants/colors.dart';
 import 'package:record_me/constants/dimensions.dart';
 import 'package:record_me/constants/strings.dart';
 import 'package:record_me/constants/styles.dart';
+import 'package:record_me/routes.dart';
+import 'package:record_me/screens/base_controller.dart';
 import 'package:record_me/screens/signup_screen/signup_controller.dart';
 import 'package:record_me/shared_widgets/custom_text_input.dart';
 import 'package:record_me/shared_widgets/shared_button.dart';
 import 'package:record_me/shared_widgets/social_button.dart';
+import 'package:record_me/utils/dialogs.dart';
 
 const bottomPadding = EdgeInsets.only(bottom: mediumDimens);
 
@@ -120,25 +123,28 @@ class SignupScreen extends StatelessWidget {
                       ),
                     ),
                     // ------------------ Social media buttons user msg ------------------
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SocialButton(
-                          socialIcon: FontAwesomeIcons.facebook,
-                          mColor: const Color(0xFF0E8BF1),
-                          mOnPressed: onFBPressed,
-                        ),
-                        SocialButton(
-                          socialIcon: FontAwesomeIcons.twitter,
-                          mColor: const Color(0xFF5DA9DD),
-                          mOnPressed: onTwitterPressed,
-                        ),
-                        SocialButton(
-                          socialIcon: FontAwesomeIcons.google,
-                          mColor: const Color(0xFFF10E3B),
-                          mOnPressed: onGooglePressed,
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: largeDimens),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SocialButton(
+                            socialIcon: FontAwesomeIcons.facebook,
+                            mColor: const Color(0xFF0E8BF1),
+                            mOnPressed: onFBPressed,
+                          ),
+                          SocialButton(
+                            socialIcon: FontAwesomeIcons.twitter,
+                            mColor: const Color(0xFF5DA9DD),
+                            mOnPressed: onTwitterPressed,
+                          ),
+                          SocialButton(
+                            socialIcon: FontAwesomeIcons.google,
+                            mColor: const Color(0xFFF10E3B),
+                            mOnPressed: onGooglePressed,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -150,19 +156,31 @@ class SignupScreen extends StatelessWidget {
     );
   }
 
-  String? onEmailValidate(String? p1) {}
+  void onEmailSaved(String? email) {
+    _signUpController.email = email;
+  }
 
-  String? onPasswordValidate(String? p1) {}
+  void onPasswordSaved(String? password) {
+    _signUpController.password = password;
+  }
 
-  void onEmailSaved(String? p1) {}
+  void onLoginHerePressed() {
+    Get.toNamed(loginScreen);
+  }
 
-  void onPasswordSaved(String? p1) {}
+  void onSignUpPressed() {
+    final valid = _formKey.currentState?.validate();
+    if (valid != null) {
+      if (valid) {
+        _formKey.currentState?.save();
+        _signUpController.signupCall();
+      }
+    }
+  }
 
-  void onLoginHerePressed() {}
-
-  void onSignUpPressed() {}
-
-  void onFBPressed() {}
+  void onFBPressed() {
+    showInfoDialog(error, 'This is test error body test is look pretrrt ?');
+  }
 
   void onTwitterPressed() {}
 

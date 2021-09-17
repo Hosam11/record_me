@@ -10,7 +10,7 @@ class CustomTextInput extends StatelessWidget {
     this.keyboardType,
     this.labelText,
     this.hintText,
-    this.isAutoValidate = false,
+    this.isAutoValidate = true,
     this.onSaved,
     this.validator,
     this.onFieldSubmitted,
