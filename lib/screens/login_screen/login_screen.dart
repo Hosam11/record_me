@@ -9,6 +9,8 @@ import 'package:record_me/constants/colors.dart';
 import 'package:record_me/constants/dimensions.dart';
 import 'package:record_me/constants/strings.dart';
 import 'package:record_me/constants/styles.dart';
+import 'package:record_me/routes.dart';
+import 'package:record_me/screens/base_controller.dart';
 import 'package:record_me/screens/login_screen/login_controller.dart';
 import 'package:record_me/shared_widgets/custom_text_input.dart';
 import 'package:record_me/shared_widgets/shared_button.dart';
@@ -36,16 +38,24 @@ class LoginScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: largeDimens),
+                    // ------------------ logo  ------------------
                     Image.asset(
                       logoImg,
                       width: context.isPortrait
                           ? size.width * 0.4
                           : size.height * 0.4,
                     ),
-                    SizedBox(
-                      height: context.isPortrait
-                          ? size.width * 0.1
-                          : size.height * 0.2,
+
+                    Padding(
+                      padding:
+                          const EdgeInsets.symmetric(vertical: largeDimens),
+                      child: Text(
+                        welcomeMsg,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6
+                            ?.copyWith(color: kAccentColor),
+                      ),
                     ),
                     // ------------------ email field ------------------
                     Padding(
@@ -121,28 +131,31 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     // ------------------ Social media buttons user msg ------------------
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SocialButton(
-                          socialIcon: FontAwesomeIcons.facebook,
-                          mColor: const Color(0xFF0E8BF1),
-                          mOnPressed: () {
-                            signInWithFacebook(_loginController);
-                            Fimber.i('');
-                          },
-                        ),
-                        SocialButton(
-                          socialIcon: FontAwesomeIcons.twitter,
-                          mColor: const Color(0xFF5DA9DD),
-                          mOnPressed: onTwitterPressed,
-                        ),
-                        SocialButton(
-                          socialIcon: FontAwesomeIcons.google,
-                          mColor: const Color(0xFFF10E3B),
-                          mOnPressed: signInWithGoogle,
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: largeDimens),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SocialButton(
+                            socialIcon: FontAwesomeIcons.facebook,
+                            mColor: const Color(0xFF0E8BF1),
+                            mOnPressed: () {
+                              signInWithFacebook(_loginController);
+                              Fimber.i('');
+                            },
+                          ),
+                          SocialButton(
+                            socialIcon: FontAwesomeIcons.twitter,
+                            mColor: const Color(0xFF5DA9DD),
+                            mOnPressed: onTwitterPressed,
+                          ),
+                          SocialButton(
+                            socialIcon: FontAwesomeIcons.google,
+                            mColor: const Color(0xFFF10E3B),
+                            mOnPressed: signInWithGoogle,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -154,15 +167,13 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  String? onEmailValidate(String? p1) {}
-
-  String? onPasswordValidate(String? p1) {}
-
   void onEmailSaved(String? p1) {}
 
   void onPasswordSaved(String? p1) {}
 
-  void signupPressed() {}
+  void signupPressed() {
+    Get.toNamed(signupScreen);
+  }
 
   Future<void> onEmailLoginPressed() async {
     // final userCred = await signInWithFacebook();
