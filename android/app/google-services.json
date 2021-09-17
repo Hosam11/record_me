@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "298753846561",
+    "project_id": "record-me-fc2b9",
+    "storage_bucket": "record-me-fc2b9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298753846561:android:3a2556032b020fc157e260",
+        "android_client_info": {
+          "package_name": "com.example.record_me"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "298753846561-fbdv153u9buv2opia64kor0jmsj8hb54.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDE5AjNAg_bgPJjSSvXqUQx9p5qWZSKlKM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "298753846561-fbdv153u9buv2opia64kor0jmsj8hb54.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
