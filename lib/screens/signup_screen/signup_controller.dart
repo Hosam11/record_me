@@ -33,11 +33,11 @@ class SignUpController extends GetxController {
     update();
   }
 
-  Future<void> signupCall() async {
-    makeInternetCall(makeSignupCall);
+  Future<void> signupEmailCall() async {
+    makeInternetCall(_makeSignupCall);
   }
 
-  Future<void> makeSignupCall() async {
+  Future<void> _makeSignupCall() async {
     Fimber.i('email= $email, psd= $password  ');
     startLoading();
     try {
@@ -47,7 +47,7 @@ class SignUpController extends GetxController {
         password: password!,
       );
       Fimber.i('userCredential= $userCredential');
-      await showInfoDialog('Congrats', 'Signup Successfully');
+      await showInfoDialog(congrats, emailCreatedSucess);
       saveUserData(userCredential);
       stopLoading();
       Get.toNamed(homeScreen);
@@ -56,6 +56,7 @@ class SignUpController extends GetxController {
       Fimber.i('firebaseCode= ${e.code}');
       await showInfoDialog(error, e.message);
     } catch (e) {
+      stopLoading();
       Fimber.i('error= $e');
     }
   }

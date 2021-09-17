@@ -15,6 +15,10 @@ const signup = 'Sign up';
 // dialogs
 const error = 'Error !';
 const noInternetMsg = 'No internet connection';
+const congrats = 'Congratulation';
+// const congrats = 'Login successfully';
+const emailCreatedSucess = 'Email created successfully';
+
 // validators
 const requiredField = 'This field required';
 const invalidEmail = 'Email invalid';
