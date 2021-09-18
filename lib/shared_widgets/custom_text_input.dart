@@ -40,6 +40,7 @@ class CustomTextInput extends StatelessWidget {
       obscureText: obscure ?? false,
       enableSuggestions: false,
       autocorrect: false,
+      onChanged: onChange,
       keyboardType: keyboardType,
       textInputAction: textInputAction,
       decoration: kTextFieldDecoration.copyWith(
