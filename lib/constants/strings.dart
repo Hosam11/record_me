@@ -12,13 +12,21 @@ const alreadyUser = 'Already have an account?  ';
 const loginHere = 'Login here';
 const orSignUpWith = 'Or sign up with';
 const signup = 'Sign up';
-// dialogs
-const error = 'Error !';
-const noInternetMsg = 'No internet connection';
-const congrats = 'Congratulation';
+
 // const congrats = 'Login successfully';
 const emailCreatedSucess = 'Email created successfully';
 
 // validators
 const requiredField = 'This field required';
 const invalidEmail = 'Email invalid';
+
+// dialogs
+const error = 'Error !';
+const noInternetMsg = 'No internet connection';
+const congrats = 'Congratulation';
+const audioNameHint = 'audio name';
+const typeAudioName = 'Type audio name';
+const save = 'Save';
+
+// home
+const myRecords = 'My Records';

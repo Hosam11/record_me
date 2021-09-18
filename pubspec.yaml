@@ -26,7 +26,13 @@ dependencies:
   firebase_core: ^1.6.0
   shared_preferences: ^2.0.7
   json_serializable: ^4.1.4
+  flutter_sound: ^8.3.12
+  permission_handler: ^8.1.6
+  record: ^3.0.0
+  just_audio: ^0.9.11
+  firebase_storage: ^10.0.3
 
+#  path_provider: ^2.0.5
 dev_dependencies:
   flutter_test:
     sdk: flutter
