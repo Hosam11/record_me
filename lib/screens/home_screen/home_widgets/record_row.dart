@@ -8,9 +8,11 @@ class RecordRow extends StatelessWidget {
   const RecordRow({
     Key? key,
     required this.videoModel,
+    this.onVoiceDelete,
   }) : super(key: key);
 
   final VideoModel videoModel;
+  final VoidCallback? onVoiceDelete;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,9 +24,11 @@ class RecordRow extends StatelessWidget {
             children: [
               Text(videoModel.name),
               MyAudioPlayer(
-                  source: ap.AudioSource.uri(
-                Uri.parse(videoModel.url),
-              )),
+                onDelete: onVoiceDelete,
+                source: ap.AudioSource.uri(
+                  Uri.parse(videoModel.url),
+                ),
+              ),
             ],
           ),
         ),

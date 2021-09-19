@@ -4,7 +4,7 @@ import 'package:record_me/constants/colors.dart';
 import 'package:record_me/constants/dimensions.dart';
 
 startLoading() async {
-  return Get.dialog(
+  return await Get.dialog(
     const Center(
       child: CircularProgressIndicator(
         color: kAccentColor,

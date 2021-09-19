@@ -69,13 +69,11 @@ class MyAudioPlayerState extends State<MyAudioPlayer> {
           children: <Widget>[
             _buildControl(),
             _buildSlider(constraints.maxWidth),
-            // IconButton(
-            //   icon: const Icon(Icons.delete,
-            //       color: const Color(0xFF73748D), size: _deleteBtnSize),
-            //   onPressed: () {
-            //     _audioPlayer.stop().then((value) => widget.onDelete());
-            //   },
-            // ),
+            IconButton(
+              icon: const Icon(Icons.delete,
+                  color: Color(0xFF73748D), size: _deleteBtnSize),
+              onPressed: widget.onDelete,
+            ),
           ],
         );
       },

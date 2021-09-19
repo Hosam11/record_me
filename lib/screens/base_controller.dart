@@ -9,10 +9,10 @@ import 'package:record_me/utils/services/storage_service.dart';
 // class BaseController {
 final _internetService = Get.find<InternetService>();
 
-void makeInternetCall(call) {
+Future<void> makeInternetCall(call) async {
   if (_internetService.hasConnection.value) {
     Fimber.i('');
-    call();
+    await call();
   } else {
     showInfoDialog(
       error,

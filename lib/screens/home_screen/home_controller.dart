@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:fimber/fimber.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class HomeController extends GetxController {
 
   RxString audioName = ''.obs;
 
-  RxList<VideoModel> videosRefs = <VideoModel>[].obs;
+  List<VideoModel> voices = <VideoModel>[];
 
   set userData(UserData? value) {
     _userData = value;
@@ -48,25 +49,29 @@ class HomeController extends GetxController {
 
   Future<void> uploadFile(String audioPath) async {
     Fimber.i('audioPath= $audioPath');
-    UploadTask uploadTask;
     // Create a Reference to the file
-    Reference ref = FirebaseStorage.instance
-        .ref()
-        .child('${userData?.id}/Audios')
-        .child('${audioName.value}.mp4');
 
-    final metadata = SettableMetadata(
-      contentType: 'audio/mp4',
-      customMetadata: {'picked-file-path': audioPath},
-    );
+    try {
+      UploadTask uploadTask;
+      Reference ref = FirebaseStorage.instance
+          .ref()
+          .child('${userData?.id}/Audios')
+          .child('${audioName.value}.mp4');
 
-    uploadTask = ref.putFile(File(audioPath), metadata);
-    Fimber.i('uploadTask= $uploadTask');
+      final metadata = SettableMetadata(
+        contentType: 'audio/mp4',
+        customMetadata: {'picked-file-path': audioPath},
+      );
+      uploadTask = ref.putFile(File(audioPath), metadata);
+      Fimber.i('uploadTask= ${uploadTask.snapshot.state}');
+    } catch (e) {
+      Fimber.e('HomeController.uploadFile e= $e');
+    }
   }
 
-  typeAudioNameDialog() async {
+  Future<dynamic> typeAudioNameDialog() async {
     final _formKey = GlobalKey<FormState>();
-    await Get.defaultDialog(
+    return await Get.defaultDialog(
       title: typeAudioName,
       titleStyle: const TextStyle(color: kSecondaryColor),
       contentPadding: const EdgeInsets.all(mediumDimens),
@@ -109,23 +114,23 @@ class HomeController extends GetxController {
   }
 
   Future<void> onStopRecord(String path) async {
-    makeInternetCall(() async {
-      await typeAudioNameDialog();
-      Fimber.i('audioName= ${audioName.value}');
-      if (audioName.value.isNotEmpty) {
-        startLoading();
-        try {
-          await uploadFile(path);
-          stopLoading();
-          await getVideoData();
-        } catch (e) {
-          stopLoading();
-          showInfoDialog(error, e.toString());
-        }
+    // makeInternetCall(() async {
+    await typeAudioNameDialog();
+    Fimber.i('audioName= ${audioName.value}');
+    if (audioName.value.isNotEmpty) {
+      startLoading();
+      try {
+        await uploadFile(path);
+        stopLoading();
+        await getVideoData();
+      } catch (e) {
+        stopLoading();
+        showInfoDialog(error, e.toString());
       }
-    });
+    }
+    // });
+    update();
   }
-
 
   Future<void> getVideoData() async {
     startLoading();
@@ -136,12 +141,16 @@ class HomeController extends GetxController {
           .child(userId)
           .child('Audios')
           .listAll();
-
+      Fimber.i('allVideoDataLen= ${allVideoData.items.length}');
+      voices.clear();
       for (var ref in allVideoData.items) {
         final url = await ref.getDownloadURL();
-        Fimber.i('url= ${ref.name}');
+        Fimber.i('name= ${ref.name}');
         Fimber.i('url= $url');
-        videosRefs.add(VideoModel(ref.name, url));
+        final isExist = voices.firstWhereOrNull(
+          (voice) => voice.name == ref.name,
+        );
+        voices.add(VideoModel(ref.name, url));
       }
       stopLoading();
     } catch (e) {
@@ -149,5 +158,24 @@ class HomeController extends GetxController {
       showInfoDialog(error, e.toString());
       stopLoading();
     }
+    update();
+  }
+
+  Future<void> deleteVoice(String name) async {
+    startLoading();
+    try {
+      await FirebaseStorage.instance
+          .ref()
+          .child(userId)
+          .child(audiosFolderKey)
+          .child(name)
+          .delete();
+      await getVideoData();
+      stopLoading();
+    } catch (e) {
+      stopLoading();
+      Fimber.e('e= ${e}');
+    }
+    update();
   }
 }
