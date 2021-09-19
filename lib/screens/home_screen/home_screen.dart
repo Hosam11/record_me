@@ -65,6 +65,6 @@ class HomeScreen extends StatelessWidget {
   }
 
   void onDeleteVoice(String name) {
-    Get.find<HomeController>().deleteVoice(name);
+    Get.find<HomeController>().deleteAudioCall(name);
   }
 }

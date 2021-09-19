@@ -114,21 +114,21 @@ class HomeController extends GetxController {
   }
 
   Future<void> onStopRecord(String path) async {
-    // makeInternetCall(() async {
-    await typeAudioNameDialog();
-    Fimber.i('audioName= ${audioName.value}');
-    if (audioName.value.isNotEmpty) {
-      startLoading();
-      try {
-        await uploadFile(path);
-        stopLoading();
-        await getVideoData();
-      } catch (e) {
-        stopLoading();
-        showInfoDialog(error, e.toString());
+    makeInternetCall(() async {
+      await typeAudioNameDialog();
+      Fimber.i('audioName= ${audioName.value}');
+      if (audioName.value.isNotEmpty) {
+        startLoading();
+        try {
+          await uploadFile(path);
+          stopLoading();
+          await getVideoData();
+        } catch (e) {
+          stopLoading();
+          showInfoDialog(error, e.toString());
+        }
       }
-    }
-    // });
+    });
     update();
   }
 
@@ -161,7 +161,11 @@ class HomeController extends GetxController {
     update();
   }
 
-  Future<void> deleteVoice(String name) async {
+  deleteAudioCall(String name) {
+    makeInternetCall(() async => await _deleteVoice(name));
+  }
+
+  Future<void> _deleteVoice(String name) async {
     startLoading();
     try {
       await FirebaseStorage.instance
