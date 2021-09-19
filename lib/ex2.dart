@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
         body: Center(
           child: showPlayer
               ? Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25),
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: MyAudioPlayer(
                     source: audioSource!,
                     onDelete: () {

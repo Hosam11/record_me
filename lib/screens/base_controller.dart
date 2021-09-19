@@ -19,6 +19,7 @@ void makeInternetCall(call) {
       noInternetMsg,
     );
   }
+  return;
 }
 
 String? onEmailValidate(String? email) {

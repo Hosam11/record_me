@@ -153,6 +153,6 @@ class MyAudioPlayerState extends State<MyAudioPlayer> {
 
   Future<void> stop() async {
     await _audioPlayer.stop();
-    return _audioPlayer.seek(const Duration(milliseconds: 0));
+    return _audioPlayer.seek(const Duration());
   }
 }
