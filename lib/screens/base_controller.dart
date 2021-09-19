@@ -11,7 +11,7 @@ final _internetService = Get.find<InternetService>();
 
 Future<void> makeInternetCall(call) async {
   if (_internetService.hasConnection.value) {
-    Fimber.i('');
+    Fimber.i('makeInternetCall');
     await call();
   } else {
     showInfoDialog(
@@ -52,7 +52,7 @@ bool isEmailNotValid(String email) => !RegExp(
         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
     .hasMatch(email);
 
-saveUserData(UserCredential user) async {
+Future<void> saveUserData(UserCredential user) async {
   // if fb case get email
   var email = user.additionalUserInfo?.profile?['email'];
   // if email case get email

@@ -16,8 +16,8 @@ import 'package:record_me/shared_widgets/shared_button.dart';
 import 'package:record_me/utils/dialogs.dart';
 import 'package:record_me/utils/services/storage_service.dart';
 
-final userId = Get.find<StorageService>().getString(idKey);
-const audiosFolderKey = 'Audios';
+// final userId = Get.find<StorageService>().getString(idKey);
+// const audiosFolderKey = 'Audios';
 
 class HomeController extends GetxController {
   UserData? _userData;
@@ -137,6 +137,7 @@ class HomeController extends GetxController {
 
   Future<void> getVideoData() async {
     startLoading();
+    final userId = Get.find<StorageService>().getString(idKey);
     Fimber.i('userId= $userId');
     try {
       final allVideoData = await FirebaseStorage.instance
@@ -169,12 +170,13 @@ class HomeController extends GetxController {
   }
 
   Future<void> _deleteVoice(String name) async {
+    final userId = Get.find<StorageService>().getString(idKey);
     startLoading();
     try {
       await FirebaseStorage.instance
           .ref()
           .child(userId)
-          .child(audiosFolderKey)
+          .child('Audios')
           .child(name)
           .delete();
       await getVideoData();

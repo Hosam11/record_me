@@ -19,7 +19,9 @@ class LoginController extends GetxController {
 
   // ------------------------- setters -------------------------
   String? get email => _email;
+
   String? get password => _password;
+
   bool get visiblePsd => _visiblePsd.value;
 
   // ------------------------- setters -------------------------
@@ -48,7 +50,7 @@ class LoginController extends GetxController {
         password: password!,
       );
       Fimber.i('userCredential= $userCredential');
-      saveUserData(userCredential);
+      await saveUserData(userCredential);
       stopLoading();
       Get.toNamed(homeScreen);
     } on FirebaseAuthException catch (e) {
