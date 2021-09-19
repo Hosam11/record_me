@@ -10,6 +10,7 @@ startLoading() async {
         color: kAccentColor,
       ),
     ),
+    barrierDismissible: false,
   );
 }
 

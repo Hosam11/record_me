@@ -10,11 +10,11 @@ import 'package:record_me/constants/strings.dart';
 import 'package:record_me/constants/styles.dart';
 import 'package:record_me/routes.dart';
 import 'package:record_me/screens/base_controller.dart';
+import 'package:record_me/screens/login_screen/login_controller.dart';
 import 'package:record_me/screens/signup_screen/signup_controller.dart';
 import 'package:record_me/shared_widgets/custom_text_input.dart';
 import 'package:record_me/shared_widgets/shared_button.dart';
 import 'package:record_me/shared_widgets/social_button.dart';
-import 'package:record_me/utils/dialogs.dart';
 
 const bottomPadding = EdgeInsets.only(bottom: mediumDimens);
 
@@ -122,6 +122,8 @@ class SignupScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 40),
+
                     // ------------------ Social media buttons user msg ------------------
                     Padding(
                       padding: const EdgeInsets.only(bottom: largeDimens),
@@ -133,7 +135,7 @@ class SignupScreen extends StatelessWidget {
                             mColor: const Color(0xFF0E8BF1),
                             mOnPressed: onFBPressed,
                           ),
-                          SocialButton(
+                          /*SocialButton(
                             socialIcon: FontAwesomeIcons.twitter,
                             mColor: const Color(0xFF5DA9DD),
                             mOnPressed: onTwitterPressed,
@@ -142,7 +144,7 @@ class SignupScreen extends StatelessWidget {
                             socialIcon: FontAwesomeIcons.google,
                             mColor: const Color(0xFFF10E3B),
                             mOnPressed: onGooglePressed,
-                          ),
+                          ),*/
                         ],
                       ),
                     ),
@@ -178,9 +180,12 @@ class SignupScreen extends StatelessWidget {
     }
   }
 
-  void onFBPressed() {
-    showInfoDialog(error, 'This is test error body test is look pretrrt ?');
-  }
+  // void onFBPressed() {
+  //   showInfoDialog(error, 'This is test error body test is look pretrrt ?');
+  // }
+
+  Future<void> onFBPressed() async =>
+     await Get.put(LoginController()).loginWithFacebook();
 
   void onTwitterPressed() {}
 

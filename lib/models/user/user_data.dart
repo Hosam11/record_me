@@ -18,4 +18,9 @@ class UserData {
 
   factory UserData.fromJson(Map<String, dynamic> json) =>
       _$UserDataFromJson(json);
+
+  @override
+  String toString() {
+    return 'UserData{email: $email, name: $name, id: $id}';
+  }
 }

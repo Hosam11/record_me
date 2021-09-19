@@ -120,6 +120,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 40),
                     Padding(
                       padding: const EdgeInsets.all(16).copyWith(top: 20),
                       child: const Text(
@@ -144,7 +145,7 @@ class LoginScreen extends StatelessWidget {
                               Fimber.i('');
                             },
                           ),
-                          SocialButton(
+                          /* SocialButton(
                             socialIcon: FontAwesomeIcons.twitter,
                             mColor: const Color(0xFF5DA9DD),
                             mOnPressed: onTwitterPressed,
@@ -153,7 +154,7 @@ class LoginScreen extends StatelessWidget {
                             socialIcon: FontAwesomeIcons.google,
                             mColor: const Color(0xFFF10E3B),
                             mOnPressed: signInWithGoogle,
-                          ),
+                          ),*/
                         ],
                       ),
                     ),
@@ -193,7 +194,7 @@ class LoginScreen extends StatelessWidget {
 
   Future<void> signInWithFacebook(LoginController loginController) async {
     // final x = Get.find<LoginController>();
-    loginController.loginWithFacebook();
+    await loginController.loginWithFacebook();
   }
 
   void signInWithGoogle() {}

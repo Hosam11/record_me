@@ -40,7 +40,7 @@ class HomeController extends GetxController {
     final email = Get.find<StorageService>().getString(emailKey);
     final name = Get.find<StorageService>().getString(nameKey);
     userData = UserData(email: email, name: name, id: id);
-
+    Fimber.i('userData= $userData');
     Future.delayed(Duration.zero, () async {
       makeInternetCall(getVideoData);
       // await getVideoData();
@@ -63,6 +63,9 @@ class HomeController extends GetxController {
         customMetadata: {'picked-file-path': audioPath},
       );
       uploadTask = ref.putFile(File(audioPath), metadata);
+      await uploadTask.whenComplete(() async {
+        Fimber.i('compelete}');
+      });
       Fimber.i('uploadTask= ${uploadTask.snapshot.state}');
     } catch (e) {
       Fimber.e('HomeController.uploadFile e= $e');

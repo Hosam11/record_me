@@ -68,23 +68,39 @@ class LoginController extends GetxController {
     try {
       startLoading();
       final LoginResult loginResult = await FacebookAuth.instance.login();
+
+      switch (loginResult.status) {
+        case LoginStatus.success:
+          final OAuthCredential facebookAuthCredential =
+              FacebookAuthProvider.credential(loginResult.accessToken!.token);
+          Fimber.i('facebookAuthCredential= ${facebookAuthCredential.asMap()}');
+          // Once signed in, return the UserCredential
+          final UserCredential userCredential = await FirebaseAuth.instance
+              .signInWithCredential(facebookAuthCredential);
+          Fimber.i('userCredential= $userCredential');
+          stopLoading();
+
+          await saveUserData(userCredential);
+          Get.toNamed(homeScreen);
+          break;
+        case LoginStatus.cancelled:
+        case LoginStatus.failed:
+          await showInfoDialog(error, loginResult.message);
+          stopLoading();
+
+          break;
+        case LoginStatus.operationInProgress:
+          break;
+      }
       Fimber.i(' status= ${loginResult.status}');
       Fimber.i(' message= ${loginResult.message}');
       Fimber.i(' accessToken= ${loginResult.accessToken}');
       // Create a credential from the access token
       // access token nullable if return without login
-      final OAuthCredential facebookAuthCredential =
-          FacebookAuthProvider.credential(loginResult.accessToken!.token);
-      Fimber.i('facebookAuthCredential= ${facebookAuthCredential.asMap()}');
-      // Once signed in, return the UserCredential
-      final UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithCredential(facebookAuthCredential);
-      Fimber.i('userCredential= $userCredential');
-      stopLoading();
-      await saveUserData(userCredential);
-      Get.toNamed(homeScreen);
     } catch (e) {
-      Fimber.i('user not logged e= $e ');
+      stopLoading();
+      showInfoDialog(error, '$e');
+      // Fimber.i('user not logged e= $e ');
     }
   }
 }

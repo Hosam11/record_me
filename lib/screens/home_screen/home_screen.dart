@@ -8,7 +8,7 @@ import 'package:record_me/screens/home_screen/home_widgets/audio_recorder.dart';
 import 'package:record_me/screens/home_screen/home_widgets/record_row.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
   // final homeController = Get.put(HomeController());
 
   @override
@@ -31,7 +31,8 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics()),
                       shrinkWrap: true,
                       itemBuilder: (_, index) => RecordRow(
                         videoModel: homeController.voices[index],

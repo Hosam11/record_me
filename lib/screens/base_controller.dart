@@ -53,8 +53,15 @@ bool isEmailNotValid(String email) => !RegExp(
     .hasMatch(email);
 
 saveUserData(UserCredential user) async {
+  // if fb case get email
+  var email = user.additionalUserInfo?.profile?['email'];
+  // if email case get email
+  email ??= user.user?.email;
+  Fimber.i(' >> email << = $email');
   // user.credential.token;
+  final userId = '${user.user?.uid}$email';
+  Fimber.i('userIdStored= $userId');
   final storageServ = Get.find<StorageService>();
   await storageServ.setString(emailKey, user.user?.email ?? notFoundPref);
-  await storageServ.setString(idKey, user.user?.uid ?? notFoundPref);
+  await storageServ.setString(idKey, userId);
 }

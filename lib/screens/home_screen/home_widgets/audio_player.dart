@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart' as ap;
 
@@ -11,9 +12,12 @@ class MyAudioPlayer extends StatefulWidget {
   /// Setting this to null hides the delete button
   final VoidCallback? onDelete;
 
+  final String? url;
+
   const MyAudioPlayer({
     required this.source,
     this.onDelete,
+    this.url,
   });
 
   @override
@@ -100,6 +104,10 @@ class MyAudioPlayerState extends State<MyAudioPlayer> {
           child:
               SizedBox(width: _controlSize, height: _controlSize, child: icon),
           onTap: () {
+            Fimber.i('widget.source= ${widget.source}');
+            Fimber.i('widget.url= ${widget.url}');
+            Fimber.i('widget.source= ${widget.source.sequence}');
+            Fimber.i('_audioPlayer.playerState= ${_audioPlayer.playerState}');
             if (_audioPlayer.playerState.playing) {
               pause();
             } else {

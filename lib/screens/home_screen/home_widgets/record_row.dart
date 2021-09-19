@@ -24,6 +24,7 @@ class RecordRow extends StatelessWidget {
             children: [
               Text(videoModel.name),
               MyAudioPlayer(
+                url: videoModel.url,
                 onDelete: onVoiceDelete,
                 source: ap.AudioSource.uri(
                   Uri.parse(videoModel.url),
